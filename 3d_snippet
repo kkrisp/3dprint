@@ -1,0 +1,38 @@
+  3d bioprinting with an Ultimaker Original
+  possible problems
+* can not control 2nd extruder
+  ; - printer specifications -
+;XYZ accuracy: 12.5, 12.5, 5 micron
+;step motor res: 0.18 deg
+
+; - cell printing specifications
+;temp.: 37.0 deg C
+;print speed: 1000 mul/min
+;10^6 cell/ml
+
+M107        ; fan off
+G21         ; set units to millimeters
+G90         ; use absolute coordinates
+M92 X160 Y160 Z4000 E80 ; set steps per mm for standard 
+
+; belt config
+M204 S2000 P2000 T3000 R3000        ; set default accelerations
+M201 X2000 Y2000 Z100 E2000         ; set max acceleration for X and Y
+M205 X20 E25                        ; set max jerk
+M203 Z2                             ; -- Set maximum feedrate
+
+M140 S37    ; print bed temperature
+M104 T0 S0  ; shut off first head heater
+M104 T1 S37 ; print temperature of second head
+
+G28G1 X110 Y45 F3000 ; bring extruder to the front
+G92 E0 ; zero the extruded length
+G1 Z30 ; lower
+G1 E50 F225 ; purge nozzle with 50mm of filament
+G1 X80 Y60 F3000 ; move aside of the puddle of primed plastic
+G92 E0 ; zero the extruded length again
+
+G28
+M104 S0     ; turn off heaters
+M140 S0     ; turn off bed
+M84     ; disable motors
