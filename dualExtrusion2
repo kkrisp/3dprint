@@ -1,0 +1,29 @@
+;checking extruders
+;is the first one working?
+T0
+G1 E10 F10
+;is the second one working
+T1
+G1 E10 F10
+;for reprap
+;M302       ; Report current state
+;M302 P1    ; Allow cold extrusion
+
+;for marlin
+M302 S0    ; Allow extrusion at any temperature
+;M302 S170  ; default temp?
+
+M104 T0 S0  ; shut off first head heater
+;is the second one working
+T1
+G1 E10 F10
+
+
+; current steps per unit
+M503
+; set 1/16 microsteps mode for the 2nd extruder
+M350 B16
+;set steps per unit
+M92 T1 E1
+; reset steps per units
+M502
